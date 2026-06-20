@@ -8,9 +8,12 @@ from transformers import pipeline
 import psycopg2
 import hashlib
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "Mehak123"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -19,14 +22,8 @@ os.makedirs("faiss_indexes", exist_ok=True)
 # =========================
 # DATABASE CONNECTION
 # =========================
-conn = psycopg2.connect(
-    dbname="rag_db",
-    user="postgres",
-    password="1234",
-    host="172.19.32.182",
-    port="5432"
-)
-cur = conn.cursor()
+DATABASE_URL = os.getenv("DATABASE_URL")
+conn = psycopg2.connect(DATABASE_URL)
 
 # =========================
 # GLOBALS
