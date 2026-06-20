@@ -24,6 +24,7 @@ os.makedirs("faiss_indexes", exist_ok=True)
 # =========================
 DATABASE_URL = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL)
+cur = conn.cursor()
 
 # =========================
 # GLOBALS
