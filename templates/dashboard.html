@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="chat-container">
+
+    <div class="chat-box">
+        {% for chat in chat_history %}
+            <div class="message user">{{ chat.q }}</div>
+            <div class="message bot">{{ chat.a }}</div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" class="chat-input">
+        <input type="text" name="query" placeholder="Ask anything..." required>
+        <button type="submit">Send</button>
+    </form>
+
+</div>
+{% endblock %}
+<script>
+    const chatBox = document.querySelector(".chat-box");
+    chatBox.scrollTop = chatBox.scrollHeight;
+</script>

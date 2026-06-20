@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RAG Chatbot UI</title>
+
+<style>
+/* =======================
+   THEME
+======================= */
+:root {
+    --primary: #9d8189;
+    --white: #ffffff;
+    --light: #f5f5f5;
+}
+
+/* =======================
+   BASE
+======================= */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--white);
+}
+
+/* =======================
+   NAVBAR
+======================= */
+.navbar {
+    background: var(--primary);
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+/* =======================
+   LOGIN / REGISTER BOX
+======================= */
+.auth-box {
+    width: 320px;
+    margin: 80px auto;
+    padding: 25px;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.auth-box h2 {
+    color: var(--primary);
+}
+
+.auth-box input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 10px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* =======================
+   CHAT UI
+======================= */
+.chat-container {
+    width: 70%;
+    margin: 40px auto;
+}
+
+.chat-box {
+    height: 450px;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 15px;
+    overflow-y: auto;
+    background: white;
+}
+
+/* messages */
+.msg {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.user {
+    background: var(--primary);
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.bot {
+    background: var(--light);
+    color: black;
+}
+
+/* input */
+.chat-input {
+    display: flex;
+    margin-top: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    outline: none;
+}
+
+.chat-input button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div><b>RAG Chatbot</b></div>
+    <div>
+        <a href="#" onclick="show('chat')">Chat</a>
+        <a href="#" onclick="show('login')">Login</a>
+        <a href="#" onclick="show('register')">Register</a>
+    </div>
+</div>
+
+<!-- =======================
+     LOGIN
+======================= -->
+<div id="login" class="auth-box">
+    <h2>Login</h2>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button>Login</button>
+</div>
+
+<!-- =======================
+     REGISTER
+======================= -->
+<div id="register" class="auth-box" style="display:none;">
+    <h2>Register</h2>
+    <input type="text" placeholder="Username">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Register</button>
+</div>
+
+<!-- =======================
+     CHAT UI
+======================= -->
+<div id="chat" class="chat-container" style="display:none;">
+
+    <div class="chat-box" id="chatBox">
+
+        <div class="msg bot">👋 Hello! Ask something from your PDF.</div>
+        <div class="msg user">What is ILP?</div>
+        <div class="msg bot">Instruction Level Parallelism is a technique used in CPUs...</div>
+
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="input" placeholder="Ask something...">
+        <button onclick="sendMsg()">Send</button>
+    </div>
+
+</div>
+
+<script>
+function show(page) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("chat").style.display = "none";
+
+    document.getElementById(page).style.display = "block";
+}
+
+/* fake chat (frontend only) */
+function sendMsg() {
+    let input = document.getElementById("input");
+    let text = input.value;
+
+    if (text === "") return;
+
+    let chatBox = document.getElementById("chatBox");
+
+    let userMsg = document.createElement("div");
+    userMsg.className = "msg user";
+    userMsg.innerText = text;
+
+    let botMsg = document.createElement("div");
+    botMsg.className = "msg bot";
+    botMsg.innerText = "🤖 (Fake response) This will come from your RAG backend.";
+
+    chatBox.appendChild(userMsg);
+    chatBox.appendChild(botMsg);
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+
+</body>
+</html>
